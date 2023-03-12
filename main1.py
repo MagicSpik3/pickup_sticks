@@ -28,8 +28,16 @@ def game_over(rows):
 
 def computer_move(rows):
     # Choose a random row and number of sticks to pick up
-    row = random.randint(1, 6)
+    # There may be empty rows, so we should exclude them from the choice
+    populated_rows = [i for i, sublist in enumerate(rows) if len(sublist) > 0]
+    #print(populated_rows)
+
+    row = random.choice(populated_rows)
+    row = row + 1
+
+    #print(row)
     sticks = random.randint(1, len(rows[row-1]))
+    #print(sticks)
     return row, sticks
 
 
@@ -38,7 +46,8 @@ def computer_move(rows):
 if __name__ == '__main__':
 
     # Initialize the game board
-    rows = [[i + 1] * (i + 1) for i in range(6)]
+    max_rows = 6
+    rows = [[i + 1] * (i + 1) for i in range(max_rows)]
     player = 1
 
     # Get user input for game mode
